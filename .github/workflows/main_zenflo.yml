@@ -32,16 +32,25 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Zip backend artifact for deployment
+        run: zip backend-release.zip ./* -r
+        working-directory: ${{ github.workspace }}/backend   # Assuming backend files are in a 'backend' directory
 
-      - name: Upload artifact for deployment jobs
+      - name: Zip frontend artifact for deployment
+        run: zip frontend-release.zip ./Templates/index.html
+        working-directory: ${{ github.workspace }}   # Assuming frontend files are in a 'Templates' directory
+
+      - name: Upload backend artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
-          name: python-app
-          path: |
-            release.zip
-            !venv/
+          name: backend-app
+          path: backend-release.zip
+
+      - name: Upload frontend artifact for deployment jobs
+        uses: actions/upload-artifact@v3
+        with:
+          name: frontend-app
+          path: frontend-release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,15 +62,22 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download artifact from build job
+      - name: Download backend artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: python-app
+          name: backend-app
 
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
+      - name: Download frontend artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: frontend-app
 
-      
+      - name: Unzip backend artifact for deployment
+        run: unzip backend-release.zip
+
+      - name: Unzip frontend artifact for deployment
+        run: unzip frontend-release.zip -d ./wwwroot   # Assuming wwwroot is the directory for frontend files in Azure App Service
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
@@ -75,4 +91,3 @@ jobs:
         with:
           app-name: 'ZenFlo'
           slot-name: 'Production'
-          
