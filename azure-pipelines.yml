@@ -6,7 +6,7 @@ variables:
   azureSubscription: 'Microsoft Azure Sponsorship'
 
   # App Service name
-  appServiceName: 'Your App Service Name'
+  appServiceName: 'zenflo'
 
   # Docker image tag
   dockerTag: '$(Build.BuildId)'
