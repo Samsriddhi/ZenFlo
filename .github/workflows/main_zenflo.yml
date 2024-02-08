@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - ZenFlo
+name: Build and deploy Python app to Azure Web App - zenflo
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python version
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v1
         with:
           python-version: '3.8'
 
@@ -36,7 +36,7 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: python-app
           path: |
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: python-app
 
@@ -65,14 +65,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_5E7BDF48116440B6BA755D6DBE263A1C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_FC6D03B6D26945949939C8AB11AF2A49 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E9403648CA5149449E67A54747302E8A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BC117A1E89E04A1F8B60A54C484E09A2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_12E095A6D76C47C99A116837B930446F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_091B36FF29FD4A94AF153277E4E0DE3E }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
-          app-name: 'ZenFlo'
+          app-name: 'zenflo'
           slot-name: 'Production'
           
