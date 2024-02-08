@@ -158,3 +158,9 @@ async def find_studio(location_data: LocationData):
     )
     location = response['choices'][0]['message']['content']
     return {"location": location}
+
+
+
+if __name__ == "__main__":
+    nest_asyncio.apply()
+    uvicorn.run(app)
