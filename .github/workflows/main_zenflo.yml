@@ -32,24 +32,16 @@ jobs:
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
-      - name: Zip backend artifact for deployment
-        run: zip backend-release.zip ./* -r
+      - name: Zip artifact for deployment
+        run: zip release.zip ./* -r
 
-      - name: Zip frontend artifact for deployment
-        run: zip frontend-release.zip ./Templates/index.html
-        working-directory: ${{ github.workspace }}   # Assuming frontend files are in a 'Templates' directory
-
-      - name: Upload backend artifact for deployment jobs
+      - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v3
         with:
-          name: backend-app
-          path: backend-release.zip
-
-      - name: Upload frontend artifact for deployment jobs
-        uses: actions/upload-artifact@v3
-        with:
-          name: frontend-app
-          path: frontend-release.zip
+          name: python-app
+          path: |
+            release.zip
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -61,28 +53,21 @@ jobs:
       id-token: write #This is required for requesting the JWT
 
     steps:
-      - name: Download backend artifact from build job
+      - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
-          name: backend-app
+          name: python-app
 
-      - name: Download frontend artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: frontend-app
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
 
-      - name: Unzip backend artifact for deployment
-        run: unzip backend-release.zip
-
-      - name: Unzip frontend artifact for deployment
-        run: unzip frontend-release.zip -d ./wwwroot   # Assuming wwwroot is the directory for frontend files in Azure App Service
-
+      
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D24B79A05831435FBC2B29EBD57D4A83 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B4049A916FD94AB3B10338E2B5EC7F11 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_9EF1671D95E9442C9D76FF290926BBE0 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_B1FA55B69DD649B79DC8E7C905F0A931 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C957603B8491458DAB87A57AF0A5EFFB }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_2ED138D75F79418EA792ED9DF44FF055 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
@@ -90,3 +75,4 @@ jobs:
         with:
           app-name: 'ZenFlo'
           slot-name: 'Production'
+          
