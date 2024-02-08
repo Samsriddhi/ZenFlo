@@ -35,7 +35,8 @@ from fastapi.templating import Jinja2Templates
 from PIL import Image, ImageDraw
 import os
 import cv2
-
+import nest_asyncio
+import uvicorn
 import base64
 
 
@@ -159,13 +160,8 @@ async def find_studio(location_data: LocationData):
     return {"location": location}
 
 
-# In[ ]:
 
 
-import nest_asyncio
-import uvicorn
 
-if __name__ == "__main__":
-    nest_asyncio.apply()
-    uvicorn.run(app)
+
 
