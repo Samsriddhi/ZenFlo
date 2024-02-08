@@ -34,7 +34,6 @@ jobs:
 
       - name: Zip backend artifact for deployment
         run: zip backend-release.zip ./* -r
-        working-directory: ${{ github.workspace }}/backend   # Assuming backend files are in a 'backend' directory
 
       - name: Zip frontend artifact for deployment
         run: zip frontend-release.zip ./Templates/index.html
