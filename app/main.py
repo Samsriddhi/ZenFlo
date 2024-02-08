@@ -76,7 +76,7 @@ pip install openai==0.28
 # In[15]:
 
 
-openai.api_key = 'e88a6209068a430a8cba0fede006b220'
+openai.api_key = 'xxx'
 openai.api_base =  'https://imaginemvp-zenflo.openai.azure.com/' 
 openai.api_type = 'azure' # Necessary for using the OpenAI library with Azure OpenAI
 openai.api_version = '2023-12-01-preview' # Latest / target version of the API
@@ -113,7 +113,7 @@ class SymptomData(BaseModel):
 class LocationData(BaseModel):
     location: str
 
-openai.api_key = 'e88a6209068a430a8cba0fede006b220'
+openai.api_key = 'xxx'
 openai.api_base =  'https://imaginemvp-zenflo.openai.azure.com/' 
 openai.api_type = 'azure' 
 openai.api_version = '2023-12-01-preview' 
