@@ -8,7 +8,7 @@ INPUT:
 OUTPUT:
 ![Screenshot 2024-02-09 021115](https://github.com/Samsriddhi/ZenFlo/assets/154321347/d649a4a5-ef27-4c44-8797-befb15b24957)
 
-##Finding Yoga Studios:
+## Finding Yoga Studios:
 
 INPUT:
 ![Screenshot 2024-02-09 021131](https://github.com/Samsriddhi/ZenFlo/assets/154321347/ed8c8e9a-f75f-4fba-af92-f2bcf0d2f9b9)
